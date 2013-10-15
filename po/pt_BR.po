@@ -1,0 +1,52 @@
+# Copyright (C) 2013 Eion Robb <eionrobb@gmail.com>
+# Copyright (C) 2013 Renato Silva <br.renatosilva@gmail.com>
+# This file is distributed under the terms of GNU GPL version 2.
+#
+
+msgid ""
+msgstr ""
+"Project-Id-Version: nickchange\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-10-15 17:17-0300\n"
+"PO-Revision-Date: 2013-10-15 17:25-0300\n"
+"Last-Translator: Renato Silva <br.renatosilva@gmail.com>\n"
+"Language-Team: Brazilian Portuguese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, c-format
+msgid "%s is now known as %s"
+msgstr "%s mudou o apelido para %s"
+
+msgid "Apply hiding rules to buddies"
+msgstr "Aplicar regras de ocultação para amigos"
+
+msgid "Eion Robb <eionrobb@gmail.com>"
+msgstr "Eion Robb <eionrobb@gmail.com>"
+
+msgid "For rooms with more than this many people"
+msgstr "Para salas com mais que este número de ocupantes"
+
+msgid "Hide Nick Changes"
+msgstr "Ocultar alterações de apelido"
+
+msgid "Hides extraneous name changing messages."
+msgstr "Oculta mensagens irrelevantes de alteração de apelido."
+
+msgid "If user has not spoken in this many minutes"
+msgstr "Se o usuário está em silêncio a este número de minutos"
+
+msgid "Nick Change Hiding"
+msgstr "Ocultar alterações de apelido"
+
+msgid ""
+"This plugin hides name change messages in large rooms, except for those "
+"users actively taking part in a conversation."
+msgstr ""
+"Este plugin oculta mensagens de alteração de apelido em salas grandes, exceto "
+"para os usuários que estejam ativamente participando da conversação."
+
+#, c-format
+msgid "You are now known as %s"
+msgstr "Você mudou seu apelido para %s"
