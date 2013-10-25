@@ -9,7 +9,10 @@
 #include "gtkconv.h"
 #include "gtkplugin.h"
 
-#ifndef _
+#ifdef ENABLE_NLS
+#	define GETTEXT_PACKAGE "nickchange"
+#	include <glib/gi18n-lib.h>
+#else
 #	define _(String) ((const char *)String)
 #	define N_(String) (String)
 #endif
@@ -367,6 +370,11 @@ init_plugin(PurplePlugin *plugin)
 	purple_prefs_add_int(DELAY_PREF, DELAY_DEFAULT);
 	purple_prefs_add_int(THRESHOLD_PREF, THRESHOLD_DEFAULT);
 	purple_prefs_add_bool(HIDE_BUDDIES_PREF, HIDE_BUDDIES_DEFAULT);
+	
+#if ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif
 }
 
 PURPLE_INIT_PLUGIN(nickchange, init_plugin, info)
