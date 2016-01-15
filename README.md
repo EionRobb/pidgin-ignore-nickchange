@@ -10,4 +10,12 @@ To compile on Linux, make sure you have the 'glib-dev', 'pidgin-dev', 'purple-de
 ```bash
 gcc -Wall -fPIC nickchange.c -o nickchange.so -shared `pkg-config --cflags --libs glib-2.0 purple pidgin`
 ```
-then copy the `nickchange.so` file to your `~/.purple/plugins` folder
+
+then copy the `nickchange.so` file to your `~/.purple/plugins` folder.
+
+Or run
+```bash
+make
+```
+
+which does all that for you.
