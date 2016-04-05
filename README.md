@@ -3,6 +3,7 @@ pidgin-ignore-nickchange
 
 Pidgin plugin to ignore "X is now known as Y" messages in chat
 
+The name of this plugin (under which it dhows up in the Plugins list) is "Nick Change Hiding", and not "Ignore Nick Change" as listed on https://developer.pidgin.im/wiki/ThirdPartyPlugins#Notifications.
 
 Windows plugin download from http://eion.robbmob.com/nickchange.dll
 
