@@ -32,9 +32,13 @@
 #define THRESHOLD_PREF "/plugins/core/nickchange/threshold"
 #define THRESHOLD_DEFAULT 20
 
-/* Hide buddies */
+// Hide buddies (in chats)
 #define HIDE_BUDDIES_PREF "/plugins/core/nickchange/hide_buddies"
 #define HIDE_BUDDIES_DEFAULT FALSE
+
+// Hide status changes in IMs
+#define HIDE_IM_PREF "/plugins/core/nickchange/hide_im"
+#define HIDE_IM_DEFAULT FALSE
 
 struct joinpart_key
 {
@@ -222,6 +226,26 @@ static void nickchange_chat_rename_user
 		return orig_chat_rename_user(conv, old_user, new_user, new_alias);
 }
 
+static gboolean
+writing_im_msg_cb(PurpleAccount *account, const char *who, char **message, PurpleConversation *conv, PurpleMessageFlags flags)
+{
+	gboolean suppress_message = FALSE;
+	
+	if(purple_prefs_get_bool(HIDE_IM_PREF)) {
+		if (flags & (PURPLE_MESSAGE_SYSTEM | PURPLE_MESSAGE_NO_LINKIFY)) {
+			//Create a fake string to handle translations
+			gchar *fake_rename = g_strdup_printf(_("%s is now known as %s"), "", "");
+			if (**message && *message && strstr(*message, "fake_rename") != NULL) {
+				suppress_message = TRUE;
+			}
+			g_free(fake_rename);
+		}
+	}
+	
+	return suppress_message;
+}
+						   
+
 static gboolean plugin_load(PurplePlugin *plugin)
 {
 	void *conv_handle;
@@ -238,6 +262,7 @@ static gboolean plugin_load(PurplePlugin *plugin)
 	//purple_signal_connect(conv_handle, "chat-buddy-joining", plugin, PURPLE_CALLBACK(chat_buddy_joining_cb), userstable);
 	//purple_signal_connect(conv_handle, "chat-buddy-leaving", plugin, PURPLE_CALLBACK(chat_buddy_leaving_cb), userstable);
 	purple_signal_connect(conv_handle, "received-chat-msg", plugin, PURPLE_CALLBACK(received_chat_msg_cb), userstable);
+	purple_signal_connect(conv_handle, "writing-im-msg", plugin, PURPLE_CALLBACK(writing_im_msg_cb), NULL);
 
 	//purple_prefs_connect_callback(plugin, const char *name, PurplePrefCallback cb, gpointer data)
 	
@@ -307,6 +332,10 @@ get_plugin_pref_frame(PurplePlugin *plugin)
 	                                                 _("Apply hiding rules to buddies"));
 	purple_plugin_pref_frame_add(frame, ppref);
 
+	ppref = purple_plugin_pref_new_with_name_and_label(HIDE_IM_PREF,
+	                                                 _("Hide alias changes in IM messages"));
+	purple_plugin_pref_frame_add(frame, ppref);
+
 	return frame;
 }
 
@@ -336,7 +365,7 @@ static PurplePluginInfo info =
 
 	NICKCHANGE_PLUGIN_ID,                               /**< id             */
 	N_("Nick Change Hiding"),                           /**< name           */
-	"0.1",                                  /**< version        */
+	"0.2",                                  /**< version        */
 	                                                  /**  summary        */
 	N_("Hides extraneous name changing messages."),
 	                                                  /**  description    */
@@ -370,6 +399,7 @@ init_plugin(PurplePlugin *plugin)
 	purple_prefs_add_int(DELAY_PREF, DELAY_DEFAULT);
 	purple_prefs_add_int(THRESHOLD_PREF, THRESHOLD_DEFAULT);
 	purple_prefs_add_bool(HIDE_BUDDIES_PREF, HIDE_BUDDIES_DEFAULT);
+	purple_prefs_add_bool(HIDE_IM_PREF, HIDE_IM_DEFAULT);
 	
 #if ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
